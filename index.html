@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>А7</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: url('https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-am90-p-zastavki-morfeus-2.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        canvas {
+            display: block;
+        }
+        .button-container {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 400px; /* Расстояние между ссылками */
+        }
+        a {
+            text-decoration: none; /* Убираем подчеркивание */
+            color: white;
+            padding: 15px 30px; /* Увеличенные отступы для овальной формы */
+            background-color: rgba(255, 0, 0, 0.8); /* Красный по умолчанию */
+            border-radius: 25px; /* Овальная форма */
+            transition: background-color 0.3s, opacity 0.3s;
+        }
+        #link1 {
+            background-color: rgba(255, 0, 0, 0.5); /* Красный */
+        }
+        #link2 {
+            background-color: rgba(0, 0, 255, 0.5); /* Синий */
+        }
+        a:hover {
+            opacity: 0.5; /* Эффект при наведении */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="button-container">
+        <a id="link1" href="#" onclick="if (confirm('ВЫ УВЕРЕНЫ!?')) { window.location.href='https://example.com'; } return false;">Ссылка</a>
+        <a id="link2" href="#" onclick="if (confirm('ВЫ УВЕРЕНЫ!?')) { window.location.href='https://example.com'; } return false;">Ссылка</a>
+    </div>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+
+        const font = 20; // Размер шрифта
+        const matrix = "A7いろはにほへとちりぬるをわかよた—れぞつねならむうゐのおくやまけふこえてあさきゆめみしゑひもせす"; // Символы для эффекта
+        const arr = []; // Массив для хранения позиций
+
+        // Инициализация массивов
+        for (let i = 0; i < W / font; i++) {
+            arr[i] = Math.random() * H; // Начальные позиции
+        }
+
+        function draw() {
+            // Полупрозрачный черный фон
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = "#0f0"; // Цвет текста
+            ctx.font = `${font}px system-ui`;
+
+            for (let i = 0; i < arr.length; i++) {
+                const txt = matrix[Math.floor(Math.random() * matrix.length)]; // Случайный символ
+                ctx.fillText(txt, i * font, arr[i] * font); // Отрисовка символа
+
+                // Если символ вышел за пределы, сбрасываем его на верх
+                if (arr[i] * font > H && Math.random() > 0.975) {
+                    arr[i] = 0;
+                }
+                arr[i]++; // Увеличиваем позицию
+            }
+        }
+
+        // Запуск анимации
+        setInterval(draw, 100); // Измените скорость анимации по своему усмотрению
+    </script>
+</body>
+</html>
